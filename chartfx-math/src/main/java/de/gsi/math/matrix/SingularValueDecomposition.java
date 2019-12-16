@@ -373,8 +373,14 @@ public class SingularValueDecomposition {
     public MatrixD getV() {
         return getEigenVectorMatrixV();
     }
-
-    private double mySIGN(final double a, final double b) {
+    
+    /**
+     * Returns the absolute value of a with the sign of b
+     * @param a input value for absolute value
+     * @param b input value for sign 
+     * @return abs(a) * sign(b)
+     */
+    private static double mySIGN(final double a, final double b) {
         return b >= 0.0 ? Math.abs(a) : -Math.abs(a);
     }
 
