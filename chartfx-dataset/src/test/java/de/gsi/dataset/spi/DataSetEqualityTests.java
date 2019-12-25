@@ -7,16 +7,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Arrays;
-
-import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.gsi.dataset.DataSet;
 import de.gsi.dataset.DataSetError.ErrorType;
 import de.gsi.dataset.EditConstraints;
 import de.gsi.dataset.spi.DimReductionDataSet.Option;
+import java.util.Arrays;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for minimal DataSet equality and hashCode implementation
@@ -27,8 +25,8 @@ public class DataSetEqualityTests {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataSetEqualityTests.class);
 
     @Test
-    public void testDataSetEquality() {
-
+    public void
+    testDataSetEquality() {
         // check for helper classes
         assertEquals(new DataRange(), new DataRange());
         assertEquals(new DefaultAxisDescription("default"), new DefaultAxisDescription("default"));
@@ -55,27 +53,36 @@ public class DataSetEqualityTests {
         assertEquals(new LimitedIndexedTreeDataSet("default", 10), new LimitedIndexedTreeDataSet("default", 11));
         assertEquals(new RollingDataSet("default"), new RollingDataSet("default"));
         assertEquals(new WrappedDataSet("default"), new WrappedDataSet("default"));
-        assertEquals(
-                new DoubleDataSet3D("test", new double[] { 1, 2, 3 }, new double[] { 6, 7, 8 },
-                        new double[][] { new double[] { 1, 2, 3 }, new double[] { 6, 5, 4 },
-                                new double[] { 9, 8, 7 } }),
-                new DoubleDataSet3D("test", new double[] { 1, 2, 3 }, new double[] { 6, 7, 8 }, new double[][] {
-                        new double[] { 1, 2, 3 }, new double[] { 6, 5, 4 }, new double[] { 9, 8, 7 } }));
+        assertEquals(new DoubleDataSet3D("test",
+                         new double[] {1, 2, 3},
+                         new double[] {6, 7, 8},
+                         new double[][] {new double[] {1, 2, 3}, new double[] {6, 5, 4}, new double[] {9, 8, 7}}),
+            new DoubleDataSet3D("test",
+                new double[] {1, 2, 3},
+                new double[] {6, 7, 8},
+                new double[][] {new double[] {1, 2, 3}, new double[] {6, 5, 4}, new double[] {9, 8, 7}}));
         assertEquals(new DimReductionDataSet(
-                new DoubleDataSet3D("test", new double[] { 1, 2, 3 }, new double[] { 6, 7, 8 },
-                        new double[][] { new double[] { 1, 2, 3 }, new double[] { 6, 5, 4 },
-                                new double[] { 9, 8, 7 } }), DIM_X, Option.SLICE),
-                new DimReductionDataSet(new DoubleDataSet3D("test", new double[] { 1, 2, 3 }, new double[] { 6, 7, 8 }, new double[][] {
-                        new double[] { 1, 2, 3 }, new double[] { 6, 5, 4 }, new double[] { 9, 8, 7 } }), DIM_X, Option.SLICE));
-        
-        
+                         new DoubleDataSet3D("test",
+                             new double[] {1, 2, 3},
+                             new double[] {6, 7, 8},
+                             new double[][] {new double[] {1, 2, 3}, new double[] {6, 5, 4}, new double[] {9, 8, 7}}),
+                         DIM_X,
+                         Option.SLICE),
+            new DimReductionDataSet(
+                new DoubleDataSet3D("test",
+                    new double[] {1, 2, 3},
+                    new double[] {6, 7, 8},
+                    new double[][] {new double[] {1, 2, 3}, new double[] {6, 5, 4}, new double[] {9, 8, 7}}),
+                DIM_X,
+                Option.SLICE));
     }
 
     /**
      * more specific test here DoubleErrorDataSet as stand-in for all AbstractDataSet derived classes
      */
     @Test
-    public void testDoubleDataSetEquality() {
+    public void
+    testDoubleDataSetEquality() {
         final DoubleErrorDataSet ds1 = new DoubleErrorDataSet("default");
         final DoubleErrorDataSet ds2 = new DoubleErrorDataSet("default");
 
@@ -223,33 +230,34 @@ public class DataSetEqualityTests {
      * @author rstein
      */
     private class NullEditConstraints implements EditConstraints {
-
         @Override
-        public boolean canAdd(int index) {
+        public boolean
+        canAdd(int index) {
             return false;
         }
 
         @Override
-        public boolean canDelete(int index) {
+        public boolean
+        canDelete(int index) {
             return false;
         }
 
         @Override
-        public boolean isEditable(final int dimIndex) {
+        public boolean
+        isEditable(final int dimIndex) {
             return false;
         }
     }
 
     private class OneDimDataSet extends AbstractDataSet<OneDimDataSet> implements DataSet {
         private static final long serialVersionUID = 1L;
-        final private double[] data = new double[] { 2.4, 5.2, 8.5, 9.2 };
+        final private double[] data = new double[] {2.4, 5.2, 8.5, 9.2};
 
-        public OneDimDataSet() {
-            super("test", 1);
-        }
+        public OneDimDataSet() { super("test", 1); }
 
         @Override
-        public double get(int dimIndex, int index) {
+        public double
+        get(int dimIndex, int index) {
             if (dimIndex != 0) {
                 throw new IndexOutOfBoundsException("Dimension index out of bound");
             }
@@ -257,7 +265,8 @@ public class DataSetEqualityTests {
         }
 
         @Override
-        public int getDataCount(int dimIndex) {
+        public int
+        getDataCount(int dimIndex) {
             if (dimIndex != 0) {
                 throw new IndexOutOfBoundsException("Dimension index out of bound");
             }
@@ -265,7 +274,8 @@ public class DataSetEqualityTests {
         }
 
         @Override
-        public int getIndex(int dimIndex, double value) {
+        public int
+        getIndex(int dimIndex, double value) {
             if (dimIndex != 0) {
                 throw new IndexOutOfBoundsException("Dimension index out of bound");
             }
@@ -273,10 +283,10 @@ public class DataSetEqualityTests {
         }
 
         @Override
-        public double getValue(int dimIndex, double x) {
+        public double
+        getValue(int dimIndex, double x) {
             return (x - Math.floor(x)) * get(dimIndex, (int) Math.floor(x))
-                    + (Math.ceil(x) - x) * get(dimIndex, (int) Math.ceil(x));
+                + (Math.ceil(x) - x) * get(dimIndex, (int) Math.ceil(x));
         }
     }
-
 }

@@ -1,12 +1,5 @@
 package de.gsi.silly.samples;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.controlsfx.glyphfont.Glyph;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.gsi.chart.XYChart;
 import de.gsi.chart.axes.spi.DefaultNumericAxis;
 import de.gsi.chart.plugins.EditAxis;
@@ -19,6 +12,8 @@ import de.gsi.dataset.spi.DataSetBuilder;
 import de.gsi.dataset.spi.DoubleDataSet;
 import de.gsi.dataset.spi.TransposedDataSet;
 import de.gsi.silly.samples.plugins.Snow;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -39,6 +34,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import org.controlsfx.glyphfont.Glyph;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Happy Christmas and a Happy Coding 2020
@@ -50,7 +48,7 @@ public class SnowFlakeSample extends Application {
     protected static final String FONT_AWESOME = "FontAwesome";
     protected static final int FONT_SIZE = 20;
     protected static final char FONT_SYMBOL_TRANSPOSE = '\uf021'; // sync symbol
-    protected static final char FONT_SYMBOL_SNOW = '\uf2dc'; // snow symbol
+    protected static final char FONT_SYMBOL_SNOW = '\uf2dc';      // snow symbol
     private static final int WIDTH = 1200;
     private static final int HEIGHT = 600;
 
@@ -65,7 +63,8 @@ public class SnowFlakeSample extends Application {
     private final DoubleProperty rmsSizeProperty = new SimpleDoubleProperty(this, "rmsSizeProperty", 5.0);
 
     @Override
-    public void start(final Stage primaryStage) {
+    public void
+    start(final Stage primaryStage) {
         final XYChart chart1 = getChristmasChart(false);
         final XYChart chart2 = getChristmasChart(true);
 
@@ -93,9 +92,16 @@ public class SnowFlakeSample extends Application {
         Spinner<Double> rmsFlakeSize = new Spinner<>(0.1, 20.0, rmsSizeProperty.get(), 0.1);
         rmsSizeProperty.bind(rmsFlakeSize.valueProperty());
 
-        final ToolBar toolBar = new ToolBar(cbTransposed, cbSnow, new Label("speed:"), nFlakeSpeed, //
-                new Label("n-flakes:"), nSnowFlakes, new Label("mean-size:"), meanFlakeSize, //
-                new Label("rms-size:"), rmsFlakeSize);
+        final ToolBar toolBar = new ToolBar(cbTransposed,
+            cbSnow,
+            new Label("speed:"),
+            nFlakeSpeed, //
+            new Label("n-flakes:"),
+            nSnowFlakes,
+            new Label("mean-size:"),
+            meanFlakeSize, //
+            new Label("rms-size:"),
+            rmsFlakeSize);
         final HBox hBox = new HBox(chart1, chart2);
 
         VBox.setVgrow(hBox, Priority.ALWAYS);
@@ -110,7 +116,8 @@ public class SnowFlakeSample extends Application {
         }
     }
 
-    private XYChart getChristmasChart(final boolean inverted) {
+    private XYChart
+    getChristmasChart(final boolean inverted) {
         DefaultNumericAxis xAxis = new DefaultNumericAxis("X", "mas");
         xAxis.setAutoRanging(false);
         xAxis.set(-11.0, +11.0);
@@ -166,12 +173,13 @@ public class SnowFlakeSample extends Application {
         return chart;
     }
 
-    public static List<DataSet> christmasTree() {
+    public static List<DataSet>
+    christmasTree() {
         List<DataSet> list = new ArrayList<>();
         final double scale = 25.0 / 10.0;
 
-        double[] xStomp = { 0.0, 2.0, 2.0, 0.0 };
-        double[] yStomp = { 2.0, 2.0, -2.0, -2.0 };
+        double[] xStomp = {0.0, 2.0, 2.0, 0.0};
+        double[] yStomp = {2.0, 2.0, -2.0, -2.0};
         for (int i = 0; i < xStomp.length; i++) {
             xStomp[i] /= scale;
             yStomp[i] /= scale;
@@ -181,10 +189,40 @@ public class SnowFlakeSample extends Application {
         stomp.getAxisDescription(1).set("Y", "Mas");
         stomp.setStyle("strokeColor=#B5651D; fillColor=#B5651D");
 
-        final double[] xTree = { 2.0, 2.0, 8.0, 8.0, 12.0, 12.0, 16.0, 16.0, 21.0, /* the tip */
-                16.0, 16.0, 12.0, 12.0, 8.0, 8.0, 2.0, 2.0 };
-        final double[] yTree = { 0.0, 9.0, 4.0, 7.0, 3.0, 5.0, 2.0, 3.0, 0.0, /* the tip */
-                -3.0, -2.0, -5.0, -3.0, -7.0, -4.0, -9.0, 0.0 };
+        final double[] xTree = {2.0,
+            2.0,
+            8.0,
+            8.0,
+            12.0,
+            12.0,
+            16.0,
+            16.0,
+            21.0, /* the tip */
+            16.0,
+            16.0,
+            12.0,
+            12.0,
+            8.0,
+            8.0,
+            2.0,
+            2.0};
+        final double[] yTree = {0.0,
+            9.0,
+            4.0,
+            7.0,
+            3.0,
+            5.0,
+            2.0,
+            3.0,
+            0.0, /* the tip */
+            -3.0,
+            -2.0,
+            -5.0,
+            -3.0,
+            -7.0,
+            -4.0,
+            -9.0,
+            0.0};
         for (int i = 0; i < xTree.length; i++) {
             xTree[i] /= scale;
             yTree[i] /= scale;
@@ -200,11 +238,13 @@ public class SnowFlakeSample extends Application {
         return list;
     }
 
-    public static void main(final String[] args) {
+    public static void
+    main(final String[] args) {
         launch(args);
     }
 
-    public static DataSet treeOrnaments(final DataSet tree, final double spacing) {
+    public static DataSet
+    treeOrnaments(final DataSet tree, final double spacing) {
         DoubleDataSet dataSet = new DoubleDataSet("ornaments");
         dataSet.setStyle("markerType=circle;");
         tree.recomputeLimits(0);
@@ -233,5 +273,4 @@ public class SnowFlakeSample extends Application {
 
         return dataSet;
     }
-
 }

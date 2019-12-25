@@ -2,7 +2,6 @@ package de.gsi.silly.samples.plugins;
 
 import com.sun.javafx.scene.DirtyBits;
 import com.sun.javafx.scene.NodeHelper;
-
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -79,8 +78,8 @@ public class SnowFlake extends Path {
     private double yState;
     private double angleState;
 
-    public SnowFlake(final double centerX, final double centerY, final double radius, final int recursion,
-            final Paint fill) {
+    public SnowFlake(
+        final double centerX, final double centerY, final double radius, final int recursion, final Paint fill) {
         super();
         setCenterX(centerX);
         setCenterY(centerY);
@@ -90,63 +89,74 @@ public class SnowFlake extends Path {
         updatePath(); // NOPMD
     }
 
-    public SnowFlake(final double radius, final Paint fill) {
-        this(0.0, 0.0, radius, 3, fill);
-    }
+    public SnowFlake(final double radius, final Paint fill) { this(0.0, 0.0, radius, 3, fill); }
 
-    public final DoubleProperty centerXProperty() {
+    public final DoubleProperty
+    centerXProperty() {
         return centerX;
     }
 
-    public final DoubleProperty centerYProperty() {
+    public final DoubleProperty
+    centerYProperty() {
         return centerY;
     }
 
-    public final double getCenterX() {
+    public final double
+    getCenterX() {
         return centerX.get();
     }
 
-    public final double getCenterY() {
+    public final double
+    getCenterY() {
         return centerY.get();
     }
 
-    public final double getRadius() {
+    public final double
+    getRadius() {
         return radius.get();
     }
 
-    public final int getRecursion() {
+    public final int
+    getRecursion() {
         return nIterations.get();
     }
 
-    public final DoubleProperty radiusProperty() {
+    public final DoubleProperty
+    radiusProperty() {
         return radius;
     }
 
-    public final IntegerProperty recursionProperty() {
+    public final IntegerProperty
+    recursionProperty() {
         return nIterations;
     }
 
-    public final void setCenterX(double value) {
+    public final void
+    setCenterX(double value) {
         if (centerX != null || value != 0.0) {
             centerXProperty().set(value);
         }
     }
 
-    public final void setCenterY(double value) {
+    public final void
+    setCenterY(double value) {
         if (centerY != null || value != 0.0) {
             centerYProperty().set(value);
         }
     }
 
-    public final void setRadius(double value) {
+    public final void
+    setRadius(double value) {
         radius.set(value);
     }
 
-    public final void setRecursion(int value) {
+    public final void
+    setRecursion(int value) {
         nIterations.set(value);
     }
 
-    private void koch(int n, double size) {
+    private void
+    koch(int n, double size) {
         if (n == 0) {
             xState += size * Math.cos(Math.toRadians(angleState));
             yState += size * Math.sin(Math.toRadians(angleState));
@@ -162,7 +172,8 @@ public class SnowFlake extends Path {
         }
     }
 
-    protected void updatePath() {
+    protected void
+    updatePath() {
         getElements().clear();
         final int n = Math.max(getRecursion(), 1);
         final double flakeRadius = getRadius();
@@ -180,5 +191,4 @@ public class SnowFlake extends Path {
         setTranslateX(this.getCenterX() - flakeRadius);
         setTranslateY(this.getCenterY() - flakeRadius);
     }
-
 }

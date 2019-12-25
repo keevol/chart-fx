@@ -1,13 +1,12 @@
 package de.gsi.dataset.spi;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.gsi.dataset.DataSet;
 import de.gsi.dataset.DataSet3D;
 import de.gsi.dataset.event.AddedDataEvent;
 import de.gsi.dataset.event.EventListener;
 import de.gsi.dataset.event.UpdateEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Reduces 3D data to 2D DataSet either via slicing, min, mean, max or integration
@@ -33,27 +32,32 @@ public class DimReductionDataSet extends DoubleDataSet implements EventListener 
         this.source.addListener(this);
     }
 
-    public int getMaxIndex(final int dimIndex) {
+    public int
+    getMaxIndex(final int dimIndex) {
         return indexMax;
     }
 
-    public int getMinIndex(final int dimIndex) {
+    public int
+    getMinIndex(final int dimIndex) {
         return indexMin;
     }
 
-    public Option getReductionOption() {
+    public Option
+    getReductionOption() {
         return reductionOption;
     }
 
     /**
      * @return source data set
      */
-    public DataSet getSourceDataSet() {
+    public DataSet
+    getSourceDataSet() {
         return source;
     }
 
     @Override
-    public void handle(UpdateEvent event) {
+    public void
+    handle(UpdateEvent event) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.atDebug().addArgument(event).log("handle({})");
         }
@@ -77,28 +81,27 @@ public class DimReductionDataSet extends DoubleDataSet implements EventListener 
                 break;
             }
         }));
-        this.fireInvalidated(new AddedDataEvent(this,
-                "updated " + DimReductionDataSet.class.getSimpleName() + " name = " + this.getName()));
+        this.fireInvalidated(new AddedDataEvent(
+            this, "updated " + DimReductionDataSet.class.getSimpleName() + " name = " + this.getName()));
         if (LOGGER.isDebugEnabled()) {
             LOGGER.atDebug().addArgument(event).log("handle({}) - done");
         }
     }
 
-    public void setMaxIndex(final int dimIndex, double val) {
-        lock().writeLockGuard(() -> {
-            indexMax = source.getIndex(dimIndex, val);
-        });
+    public void
+    setMaxIndex(final int dimIndex, double val) {
+        lock().writeLockGuard(() -> { indexMax = source.getIndex(dimIndex, val); });
         this.handle(new UpdateEvent(this, "changed indexMax"));
     }
 
-    public void setMinIndex(final int dimIndex, double val) {
-        lock().writeLockGuard(() -> {
-            indexMin = source.getIndex(dimIndex, val);
-        });
+    public void
+    setMinIndex(final int dimIndex, double val) {
+        lock().writeLockGuard(() -> { indexMin = source.getIndex(dimIndex, val); });
         this.handle(new UpdateEvent(this, "changed indexMax"));
     }
 
-    protected void updateMeanIntegral(final boolean isMean) {
+    protected void
+    updateMeanIntegral(final boolean isMean) {
         final int min = Math.min(indexMin, indexMax);
         final int max = Math.max(Math.max(indexMin, indexMax), min + 1);
         this.clearData();
@@ -128,7 +131,8 @@ public class DimReductionDataSet extends DoubleDataSet implements EventListener 
         }
     }
 
-    protected void updateMinMax(final boolean isMin) {
+    protected void
+    updateMinMax(final boolean isMin) {
         final int min = Math.min(indexMin, indexMax);
         final int max = Math.max(Math.max(indexMin, indexMax), min + 1);
         this.clearData();
@@ -156,7 +160,8 @@ public class DimReductionDataSet extends DoubleDataSet implements EventListener 
         }
     }
 
-    protected void updateSlice() {
+    protected void
+    updateSlice() {
         this.clearData();
         final int nDataCount = source.getDataCount(dimIndex);
         if (dimIndex == DataSet.DIM_Y) {

@@ -1,13 +1,9 @@
 package de.gsi.silly.samples.plugins;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.gsi.chart.plugins.ChartPlugin;
 import de.gsi.math.TRandom;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -26,6 +22,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.StrokeType;
 import javafx.util.Duration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author rstein
@@ -42,12 +40,10 @@ public class Snow extends ChartPlugin {
     private BooleanProperty snow = new SimpleBooleanProperty(this, "snow", true);
     private final ChangeListener changeListener = (ch, o, n) -> this.init();
 
-    public Snow() {
-        this(100, 10.0, 5.0, Color.web("white", 0.7));
-    }
+    public Snow() { this(100, 10.0, 5.0, Color.web("white", 0.7)); }
 
-    public Snow(final int nSnowFlakes, final double meanSnowFlakeSize, final double rmsSnowFlakeSize,
-            final Color color) {
+    public Snow(
+        final int nSnowFlakes, final double meanSnowFlakeSize, final double rmsSnowFlakeSize, final Color color) {
         super();
 
         numberOfFlakesProperty().set(nSnowFlakes);
@@ -93,31 +89,38 @@ public class Snow extends ChartPlugin {
         }
     }
 
-    public DoubleProperty meanSizeProperty() {
+    public DoubleProperty
+    meanSizeProperty() {
         return meanSize;
     }
 
-    public IntegerProperty numberOfFlakesProperty() {
+    public IntegerProperty
+    numberOfFlakesProperty() {
         return numberOfFlakes;
     }
 
-    public DoubleProperty rmsSizeProperty() {
+    public DoubleProperty
+    rmsSizeProperty() {
         return rmsSize;
     }
 
-    public ObjectProperty<Color> snowColorProperty() {
+    public ObjectProperty<Color>
+    snowColorProperty() {
         return snowColor;
     }
 
-    public BooleanProperty snowProperty() {
+    public BooleanProperty
+    snowProperty() {
         return snow;
     }
 
-    public DoubleProperty velocityProperty() {
+    public DoubleProperty
+    velocityProperty() {
         return velocity;
     }
 
-    protected void init() {
+    protected void
+    init() {
         final int n = numberOfFlakesProperty().get();
         List<PhysicalSnowFlake> list = new ArrayList<>(n);
         if (snowProperty().get()) {
@@ -138,12 +141,10 @@ public class Snow extends ChartPlugin {
         private double x;
         private double y;
 
-        public PhysicalSnowFlake(final double radius, final Paint fill) {
-            this(0.0, 0.0, radius, 2, fill);
-        }
+        public PhysicalSnowFlake(final double radius, final Paint fill) { this(0.0, 0.0, radius, 2, fill); }
 
-        protected PhysicalSnowFlake(final double centerX, final double centerY, final double radius,
-                final int recursion, final Paint fill) {
+        protected PhysicalSnowFlake(
+            final double centerX, final double centerY, final double radius, final int recursion, final Paint fill) {
             super(centerX, centerY, radius, recursion, fill);
             size = radius;
             init(); // NOPMD
@@ -153,7 +154,8 @@ public class Snow extends ChartPlugin {
          * animation based on snowflake velocity analysis taken from:
          * http://iacweb.ethz.ch/doc/publications/schefold_ogden_2002.pdf
          */
-        public void animate() {
+        public void
+        animate() {
             if (Snow.this.getChart() == null) {
                 return;
             }
@@ -172,7 +174,8 @@ public class Snow extends ChartPlugin {
             this.setTranslateY(y);
         }
 
-        protected void init() {
+        protected void
+        init() {
             if (Snow.this.getChart() == null) {
                 return;
             }
@@ -183,8 +186,6 @@ public class Snow extends ChartPlugin {
             y = Math.random() * yMax;
             this.setTranslateX(x - size / 2);
             this.setTranslateY(y - size / 2);
-
         }
     }
-
 }
